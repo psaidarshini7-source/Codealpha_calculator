@@ -1,118 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Calculator</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+
   <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: #f0f0f0;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
       font-family: Arial, sans-serif;
     }
 
-    .calculator {
-      background: #222;
-      padding: 20px;
-      border-radius: 15px;
-      width: 300px;
+    body {
+      background: #f4f4f4;
+      padding: 30px;
     }
 
-    #display {
-      width: 100%;
-      height: 60px;
-      font-size: 28px;
-      text-align: right;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 10px;
-      padding: 10px;
-      box-sizing: border-box;
+    h1 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #333;
     }
 
-    .buttons {
+    .gallery {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
     }
 
-    button {
-      height: 60px;
-      font-size: 22px;
-      border: none;
-      border-radius: 10px;
+    .gallery img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
       cursor: pointer;
+      transition: transform 0.3s;
     }
 
-    button:hover {
-      opacity: 0.9;
+    .gallery img:hover {
+      transform: scale(1.05);
     }
 
-    .operator {
-      background: orange;
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
       color: white;
-    }
-
-    .clear {
-      background: red;
-      color: white;
-    }
-
-    .equal {
-      background: green;
-      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<div class="calculator">
-  <input type="text" id="display" readonly>
+  <h1>My Image Gallery</h1>
 
-  <div class="buttons">
-    <button class="clear" onclick="clearDisplay()">C</button>
-    <button onclick="appendValue('/')">/</button>
-    <button onclick="appendValue('*')">×</button>
-    <button onclick="appendValue('-')">−</button>
-
-    <button onclick="appendValue('7')">7</button>
-    <button onclick="appendValue('8')">8</button>
-    <button onclick="appendValue('9')">9</button>
-    <button class="operator" onclick="appendValue('+')">+</button>
-
-    <button onclick="appendValue('4')">4</button>
-    <button onclick="appendValue('5')">5</button>
-    <button onclick="appendValue('6')">6</button>
-    <button onclick="appendValue('.')">.</button>
-
-    <button onclick="appendValue('1')">1</button>
-    <button onclick="appendValue('2')">2</button>
-    <button onclick="appendValue('3')">3</button>
-    <button class="equal" onclick="calculate()">=</button>
-
-    <button style="grid-column: span 4;" onclick="appendValue('0')">0</button>
+  <div class="gallery">
+    <img src="https://picsum.photos/id/1015/600/400" alt="Image 1" onclick="openImage(this.src)">
+    <img src="https://picsum.photos/id/1025/600/400" alt="Image 2" onclick="openImage(this.src)">
+    <img src="https://picsum.photos/id/1035/600/400" alt="Image 3" onclick="openImage(this.src)">
+    <img src="https://picsum.photos/id/1045/600/400" alt="Image 4" onclick="openImage(this.src)">
+    <img src="https://picsum.photos/id/1055/600/400" alt="Image 5" onclick="openImage(this.src)">
+    <img src="https://picsum.photos/id/1065/600/400" alt="Image 6" onclick="openImage(this.src)">
   </div>
-</div>
 
-<script>
-  function appendValue(value) {
-    document.getElementById("display").value += value;
-  }
+  <div class="lightbox" id="lightbox">
+    <span class="close" onclick="closeImage()">&times;</span>
+    <img id="lightbox-img" src="" alt="Large Image">
+  </div>
 
-  function clearDisplay() {
-    document.getElementById("display").value = "";
-  }
-
-  function calculate() {
-    try {
-      document.getElementById("display").value =
-        eval(document.getElementById("display").value);
-    } catch {
-      document.getElementById("display").value = "Error";
+  <script>
+    function openImage(src) {
+      document.getElementById("lightbox-img").src = src;
+      document.getElementById("lightbox").style.display = "flex";
     }
-  }
-</script>
+
+    function closeImage() {
+      document.getElementById("lightbox").style.display = "none";
+    }
+  </script>
 
 </body>
 </html>
